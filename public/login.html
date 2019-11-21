@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login Door Control</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+	
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/public/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/public/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/public/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/main.css">
+<!--===============================================================================================-->
+
+<!--<style>
+.clicker {
+  cursor: pointer;
+}
+#login-btn {
+  cursor: pointer;
+}
+</style>-->
+
+
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('/public/images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<div class="login100-form validate-form">
+					<span class="login100-form-title p-b-49">
+						Login
+					</span>
+					
+<!--					<h1>Scan from WebCam:</h1>
+<div>
+    <b>Device has camera: </b>
+    <span id="cam-has-camera"></span>
+    <br>
+    <video muted playsinline id="qr-video"></video>
+</div>
+<div>
+    <select id="inversion-mode-select">
+        <option value="original">Scan original (dark QR code on bright background)</option>
+        <option value="invert">Scan with inverted colors (bright QR code on dark background)</option>
+        <option value="both">Scan both</option>
+    </select>
+    <br>
+</div>
+<b>Detected QR code: </b>
+<span id="cam-qr-result">None</span>
+<br>
+<b>Last detected at: </b>
+<span id="cam-qr-result-timestamp"></span>
+<hr>
+
+<h1>Scan from File:</h1>
+<input type="file" id="file-selector">
+<b>Detected QR code: </b>
+<span id="file-qr-result">None</span>
+
+<script type="module">
+    import QrScanner from "/public/js/qr-scanner.min.js";
+    QrScanner.WORKER_PATH = '/public/js/qr-scanner-worker.min.js';
+    const video = document.getElementById('qr-video');
+    const camHasCamera = document.getElementById('cam-has-camera');
+    const camQrResult = document.getElementById('cam-qr-result');
+    const camQrResultTimestamp = document.getElementById('cam-qr-result-timestamp');
+    const fileSelector = document.getElementById('file-selector');
+    const fileQrResult = document.getElementById('file-qr-result');
+    function setResult(label, result) {
+        label.textContent = result;
+        camQrResultTimestamp.textContent = new Date().toString();
+        label.style.color = 'teal';
+        clearTimeout(label.highlightTimeout);
+        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
+    }
+    // ####### Web Cam Scanning #######
+    QrScanner.hasCamera().then(hasCamera => camHasCamera.textContent = hasCamera);
+    const scanner = new QrScanner(video, result => setResult(camQrResult, result));
+    scanner.start();
+    document.getElementById('inversion-mode-select').addEventListener('change', event => {
+        scanner.setInversionMode(event.target.value);
+    });
+    // ####### File Scanning #######
+    fileSelector.addEventListener('change', event => {
+        const file = fileSelector.files[0];
+        if (!file) {
+            return;
+        }
+        QrScanner.scanImage(file)
+            .then(result => setResult(fileQrResult, result))
+            .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
+    });
+</script>-->
+					
+<!--           <video id="preview"></video> -->
+          <!--<script type="text/javascript">
+            let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+            scanner.addListener('scan', function (content) {
+              alert(content);
+            });
+            Instascan.Camera.getCameras().then(function (cameras) {
+              if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+              } else {
+                console.error('No cameras found.');
+                alert('No cameras found.');
+              }
+            }).catch(function (e) {
+              console.error(e);
+            });
+          </script>-->
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Name is reauired">
+						<span class="label-input100">Name</span>
+						<input id="inputName" class="input100" type="text" name="username" placeholder="Type your username">
+						<span class="focus-input100" data-symbol="&#xf206;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Key is required">
+						<span class="label-input100">Key</span>
+						<input id="keyInput" class="input100" name="pass" placeholder="Type your key">
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+					
+					<br>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button id="login-btn" class="login100-form-btn clicker" onclick="loginClick()">
+								Login
+							</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+<!--===============================================================================================-->
+	<script src="/public/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/bootstrap/js/popper.js"></script>
+	<script src="/public/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/public/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/js/main.js"></script>
+	
+  <script>
+    function loginClick() {
+      let name = document.getElementById("inputName").value
+      let key = document.getElementById("keyInput").value
+
+      if (name == "") {
+        return false
+      }
+      if (key == "") {
+        return false
+      }
+
+      let url = "/api/login"
+      
+      fetch(url + '?name=' + name + '&key=' + key, {
+        method: 'GET',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.status == 200 || response.status == 201) {
+          localStorage.setItem('name', name);
+          localStorage.setItem('key', key);
+          window.location.replace('/');
+        } else {
+          alert("Lỗi!!!")
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        alert("Error!!!")
+      });
+
+    }
+  </script>
+
+</body>
+</html>

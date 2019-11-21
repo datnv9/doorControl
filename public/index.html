@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>uDoor Control</title>
+	
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="/manifest.json">
+
+  <meta name="msapplication-TileImage" content="/public/images/icons/mstile-144x144.png">
+  <meta name="msapplication-config" content="/public/images/icons/browserconfig.xml">
+  <meta name="msapplication-TileColor" content="#2F3BA2">
+  
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  
+  <script>
+    if (localStorage.getItem("name") === null || localStorage.getItem("key") === null) {
+      window.location.replace('/login');
+    }
+    let name = localStorage.getItem('name');
+    let key = localStorage.getItem('key');
+  </script>
+
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/public/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/public/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/public/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/main.css">
+<!--===============================================================================================-->
+</head>
+<style>
+* {
+font-family: 'Roboto', sans-serif !important;
+}
+</style>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('/public/images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<div class="login100-form validate-form">
+					<span class="login100-form-title p-b-49">
+						Điều khiển cửa cuốn
+					</span>
+					
+					<br>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button id="login-btn" class="login100-form-btn" onclick="clickBtn = 'up'" data-toggle="modal" data-target="#exampleModalCenter" >
+								Mở
+							</button>
+						</div>
+					</div>
+					
+					<br>
+					
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button id="login-btn" class="login100-form-btn" onclick="doorControl('stop')">
+								Dừng
+							</button>
+						</div>
+					</div>
+					
+					<br>
+					
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button id="login-btn" class="login100-form-btn" onclick="doorControl('down')">
+								Đóng
+							</button>
+						</div>
+					</div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="
+    top: 40%;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Chú ý:</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h1>Xác nhận mở cửa?</h1>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" onclick="doorControl('up')" data-dismiss="modal">Mở</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+<!--===============================================================================================-->
+	<script src="/public/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/bootstrap/js/popper.js"></script>
+	<script src="/public/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/public/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/js/main.js"></script>
+
+  <script>
+    let clickBtn
+    function doorControl(control) {
+      let url = "/api/door"
+
+      fetch(url + '?control=' + control + '&name=' + name + '&key=' + key, {
+        method: 'GET',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.status == 200 || response.status == 201) {
+          response.json().then(json => console.log('Success:', json))
+        } else {
+          response.json().then(json => alert("Lỗi!!! " + JSON.stringify(json)))
+          
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        alert("Error!!!" + JSON.stringify(error.message))
+      });
+    }
+  </script>
+
+</body>
+</html>
